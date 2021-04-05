@@ -2,22 +2,13 @@
 
 This is a high-level list of tasks that are on the roadmap. There is no priority list as of this writing.
 
-## realistic TODOs
-
-### Project
+## Project
 
 * build instructions: develop & deploy on Linux VM
 * Vagrant file
 * investigate whether session path requirement is prohibitive for users to complete builds
 
-### Engine
-
-* testing
-    * unit testing specific hexameter cases (to prevent regressions)
-    * unit test pentameter algorithm
-    * code coverage analysis
-
-### Website
+## Website
 
 * beautify
     * maybe go to angular, since we already have all JSON routes
@@ -29,21 +20,6 @@ This is a high-level list of tasks that are on the roadmap. There is no priority
     * scheduling batches
 
 ## Pipe dreams
-
-### Engine
-
-essentially teach it Latin:
-
-* investigate Whitaker's Words
-    * declensions: be able to correlate avo with avos
-    * conjugations: be able to correlate laborat with laboravit
-
-parsing:
-
-* lyrical meters
-* dramatic meters (haha)
-
-### Website
 
 user interaction:
 
