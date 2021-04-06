@@ -1,7 +1,6 @@
 from elisio.Sound import SoundFactory
 from elisio.Syllable import Weight
-from elisio.Word import Word
-from elisio.bridge.Bridge import Bridge, assign_weights_from_dict
+from elisio.bridge.Bridge import Bridge
 from versescanner.models.deviant import DeviantWord
 from versescanner.models.scan import WordOccurrence
 
@@ -11,30 +10,21 @@ class DatabaseBridge(Bridge):
     def __init__(self, use_dict=True):
         self.use_dict = use_dict
 
-    def split_from_deviant_word(self, word):
+    def split_from_deviant_word(self, lexeme):
         """
         if the word can be found in the repository of Deviant Words,
         we should use that instead
         """
-        deviant = DeviantWord.find(word.without_enclitic())
+        deviant = DeviantWord.find(lexeme)
         if deviant:
-            word.syllables = deviant.get_syllables()
-            for syll in word.syllables:
-                if len(syll.text) >= 1:
-                    word.text = word.text[len(syll.text):]
-            if len(word.text) > 0:
-                wrd = Word(word.text)
-                wrd.split()
-                for syllab in wrd.syllables:
-                    word.syllables.append(syllab)
-            word.recalculate_text()
-        return deviant
+            return deviant.get_syllables()
+        return []
 
     def use_dictionary(self, word):
         if not self.use_dict:
-            return
+            return []
         structs = []
-        for hit in WordOccurrence.objects.filter(word=word.text):
+        for hit in WordOccurrence.objects.filter(word=word):
             strc = hit.struct
             if len(strc) == 1 and strc[-1] == "0":
                 continue
@@ -42,31 +32,10 @@ class DatabaseBridge(Bridge):
                 strc = strc[:-1]
             if strc not in structs:
                 structs.append(strc)
-        assign_weights_from_dict(word, structs)
+        return structs
 
-    def save(self, verse, db_id):
-        entries = []
-        for count, wrd in enumerate(verse.words):
-            strct = ""
-            txt = wrd.text
-            for cnt, syll in enumerate(wrd.syllables):
-                strct += str(syll.weight.value)
-                if cnt == len(wrd.syllables) - 1 and count < len(verse.words) - 1:
-                    if wrd.may_be_heavy_by_position(verse.words[count + 1]):
-                        if syll.weight != Weight.NONE:
-                            strct = strct[:-1]
-                            strct += str(Weight.ANCEPS.value)
-            if wrd.ends_in_enclitic():
-                strct = strct[:-1]
-                txt = wrd.without_enclitic()
-                if strct[-1] == str(Weight.HEAVY.value):
-                    ltr = SoundFactory.create(txt[-1])
-                    if ltr.is_consonant() and not ltr.is_heavy_making():
-                        strct = strct[:-1]
-                        strct += str(Weight.ANCEPS.value)
-            if wrd.ends_in_variable_declension():
-                strct = strct[:-1]
-                strct += str(Weight.ANCEPS.value)
-            entries.append(WordOccurrence(word=txt, struct=strct, verse_id=db_id))
-        if len(entries) > 0:
-            WordOccurrence.objects.bulk_create(entries)
+    def make_entry(self, txt, strct, db_id):
+        return WordOccurrence(word=txt, struct=strct, verse_id=db_id)
+
+    def dump(self, entries):
+        WordOccurrence.objects.bulk_create(entries)
