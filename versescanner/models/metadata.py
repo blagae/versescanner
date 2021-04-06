@@ -2,7 +2,7 @@ from django.db.models import Model, CharField, ForeignKey, IntegerField, Boolean
 from django.db.models.deletion import CASCADE
 from enumfields import EnumField
 
-from elisio.verse.VerseType import VerseType, VerseForm
+from elisio.verse.VerseFactory import VerseType, VerseForm
 
 
 class Period(Model):

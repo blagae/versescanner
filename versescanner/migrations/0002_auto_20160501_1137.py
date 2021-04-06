@@ -3,7 +3,7 @@
 import enumfields.fields
 from django.db import migrations
 
-import elisio.verse.VerseType
+import elisio.verse.VerseFactory
 
 
 def load_initial_data(self, orm):
@@ -20,12 +20,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='databaseverse',
             name='verseType',
-            field=enumfields.fields.EnumField(default=1, enum=elisio.verse.VerseType.VerseType, max_length=10),
+            field=enumfields.fields.EnumField(default=1, enum=elisio.verse.VerseFactory.VerseType, max_length=10),
         ),
         migrations.AddField(
             model_name='poem',
             name='verseForm',
-            field=enumfields.fields.EnumField(default=1, enum=elisio.verse.VerseType.VerseForm, max_length=10),
+            field=enumfields.fields.EnumField(default=1, enum=elisio.verse.VerseFactory.VerseForm, max_length=10),
         ),
         migrations.RunPython(load_initial_data)
     ]

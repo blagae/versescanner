@@ -9,7 +9,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 
 from elisio.utils.TextDecorator import TextDecorator
 from elisio.verse.VerseFactory import VerseFactory
-from elisio.verse.VerseType import VerseType, VerseForm
+from elisio.verse.VerseFactory import VerseType, VerseForm
 from elisio.bridge.Bridge import DummyBridge
 from versescanner.bridge.DatabaseBridge import DatabaseBridge
 from elisio.exceptions import ScansionException

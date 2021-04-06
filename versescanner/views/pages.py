@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from elisio.utils.numerals import roman_to_int
-from elisio.verse.VerseType import VerseForm
+from elisio.verse.VerseFactory import VerseForm
 from versescanner.models.forms import AuthorForm, OpusForm
 from versescanner.models import Author, Opus, Book, Poem
 import versescanner.util.dbhandler

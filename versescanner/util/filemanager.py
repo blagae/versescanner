@@ -6,7 +6,7 @@ from os import listdir, getcwd
 from os.path import isfile, join
 
 from versescanner.util.dbhandler import create_verses, find_author, find_opus, find_book, find_poem
-from elisio.verse.VerseType import VerseForm
+from elisio.verse.VerseFactory import VerseForm
 from versescanner.models.metadata import Poem
 from elisio.utils.numerals import int_to_roman
 
