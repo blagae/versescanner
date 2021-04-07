@@ -24,7 +24,7 @@ def create_output_file(tree):
     """ create the file from the given xml tree """
     if isinstance(tree, Et.Element):
         xml = mini.parseString(Et.tostring(tree)).toprettyxml()
-        with open('elisio/fixtures/verses/initial_data.xml', "w", encoding='utf-8') as file:
+        with open('versescanner/fixtures/verses/initial_data.xml', "w", encoding='utf-8') as file:
             file.writelines(xml)
     else:
         raise IOError("Invalid XML Tree object")
@@ -74,7 +74,7 @@ def name_poem(poem):
 def fill_xml_object():
     """ externally facing method """
     root = Et.Element("django-objects", {'version': '1.0'})
-    path = 'elisio/fixtures/sources/'
+    path = 'versescanner/fixtures/sources/'
     # https://stackoverflow.com/questions/3207219/how-to-list-all-files-of-a-directory-in-python
     all_filenames = [f for f in listdir(path) if isfile(join(path, f))]
     # FYI if you get encoding exceptions with new files, manually set them to UTF-8
@@ -85,7 +85,7 @@ def fill_xml_object():
         count = 1
         for verse in verses:
             obj = Et.SubElement(root, "object",
-                                {'model': 'elisio.DatabaseVerse'})
+                                {'model': 'versescanner.DatabaseVerse'})
             poem_field = Et.SubElement(obj, "field",
                                        {'type': 'ForeignKey',
                                         'name': 'poem'})
@@ -120,7 +120,7 @@ def fill_xml_object():
 
 
 def sync_files():
-    path = join(getcwd(), 'elisio', 'fixtures', 'sources')
+    path = join(getcwd(), 'versescanner', 'fixtures', 'sources')
     for poem in Poem.objects.all():
         name = join(path, name_poem(poem) + "." + extension_forms[poem.verseForm])
         if isfile(name):
@@ -139,7 +139,7 @@ def sync_files():
 
 
 def sync_db():
-    path = join(getcwd(), 'elisio', 'fixtures', 'sources')
+    path = join(getcwd(), 'versescanner', 'fixtures', 'sources')
     all_filenames = [f for f in listdir(path) if isfile(join(path, f))]
     for filename in all_filenames:
         verses = [line for line in open(join(path, filename), encoding='utf-8') if line.rstrip()]

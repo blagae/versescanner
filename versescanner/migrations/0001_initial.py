@@ -76,8 +76,8 @@ class Migration(migrations.Migration):
                 ('abbreviation', models.CharField(max_length=10)),
                 ('alternative_name', models.CharField(max_length=40)),
                 ('publication', models.IntegerField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Author')),
-                ('genre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Genre')),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Author')),
+                ('genre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Genre')),
             ],
         ),
         migrations.CreateModel(
@@ -96,7 +96,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.IntegerField()),
                 ('nickname', models.CharField(max_length=20)),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Book')),
+                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Book')),
             ],
         ),
         migrations.CreateModel(
@@ -110,26 +110,26 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='deviantsyllable',
             name='word',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.DeviantWord'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.DeviantWord'),
         ),
         migrations.AddField(
             model_name='databaseverse',
             name='poem',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Poem'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Poem'),
         ),
         migrations.AddField(
             model_name='book',
             name='opus',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Opus'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Opus'),
         ),
         migrations.AddField(
             model_name='author',
             name='period',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Period'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Period'),
         ),
         migrations.AddField(
             model_name='wordoccurrence',
             name='verse',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='elisio.DatabaseVerse'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='versescanner.DatabaseVerse'),
         ),
     ]

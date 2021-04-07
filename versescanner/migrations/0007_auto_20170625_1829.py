@@ -9,7 +9,7 @@ import enumfields.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('elisio', '0006_auto_20170619_2347'),
+        ('versescanner', '0006_auto_20170619_2347'),
     ]
 
     operations = [
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             model_name='databasebatchitem',
             name='dependent_on',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
-                                    to='elisio.DatabaseBatchItem'),
+                                    to='versescanner.DatabaseBatchItem'),
         ),
         migrations.AlterField(
             model_name='databasebatchitem',

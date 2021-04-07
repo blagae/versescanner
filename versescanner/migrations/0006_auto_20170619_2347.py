@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('elisio', '0005_auto_20170509_2219'),
+        ('versescanner', '0005_auto_20170509_2219'),
     ]
 
     operations = [
@@ -57,40 +57,40 @@ class Migration(migrations.Migration):
             fields=[
                 ('batchitem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
                                                        parent_link=True, primary_key=True, serialize=False,
-                                                       to='elisio.BatchItem')),
+                                                       to='versescanner.BatchItem')),
                 ('object_type', models.CharField(max_length=10)),
                 ('object_id', models.IntegerField(blank=True)),
                 ('relation', models.CharField(max_length=10)),
                 ('negation', models.BooleanField(default=False)),
             ],
-            bases=('elisio.batchitem',),
+            bases=('versescanner.batchitem',),
         ),
         migrations.CreateModel(
             name='InputBatchItem',
             fields=[
                 ('batchitem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
                                                        parent_link=True, primary_key=True, serialize=False,
-                                                       to='elisio.BatchItem')),
+                                                       to='versescanner.BatchItem')),
                 ('contents', models.CharField(max_length=70)),
                 ('scanned_as', enumfields.fields.EnumField(enum=elisio.verse.VerseFactory.VerseType, max_length=10,
                                                            null=True)),
             ],
-            bases=('elisio.batchitem',),
+            bases=('versescanner.batchitem',),
         ),
         migrations.AddField(
             model_name='batchitem',
             name='batch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='elisio.Batch'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Batch'),
         ),
         migrations.AddField(
             model_name='batchitem',
             name='dependent_on',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='elisio.BatchItem'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='versescanner.BatchItem'),
         ),
         migrations.AddField(
             model_name='scansession',
             name='batch',
             field=models.ForeignKey(null=True, default=None, on_delete=django.db.models.deletion.CASCADE,
-                                    to='elisio.Batch'),
+                                    to='versescanner.Batch'),
         ),
     ]

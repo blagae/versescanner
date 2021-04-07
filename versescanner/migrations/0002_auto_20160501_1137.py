@@ -13,7 +13,7 @@ def load_initial_data(self, orm):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('elisio', '0001_initial'),
+        ('versescanner', '0001_initial'),
     ]
 
     operations = [

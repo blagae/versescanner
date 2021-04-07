@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('elisio', '0007_auto_20170625_1829'),
+        ('versescanner', '0007_auto_20170625_1829'),
     ]
 
     operations = [

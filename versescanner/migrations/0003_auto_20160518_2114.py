@@ -10,8 +10,8 @@ def load_initial_data(self, orm):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('elisio', '0001_initial'),
-        ('elisio', '0002_auto_20160501_1137'),
+        ('versescanner', '0001_initial'),
+        ('versescanner', '0002_auto_20160501_1137'),
     ]
 
     operations = [

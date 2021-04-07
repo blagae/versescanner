@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('elisio', '0004_auto_20170315_0150'),
+        ('versescanner', '0004_auto_20170315_0150'),
     ]
 
     operations = [

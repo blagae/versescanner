@@ -7,7 +7,7 @@ import versescanner.util.utils
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('elisio', '0008_auto_20171003_2232'),
+        ('versescanner', '0008_auto_20171003_2232'),
     ]
 
     operations = [
