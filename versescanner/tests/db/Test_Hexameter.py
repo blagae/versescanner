@@ -36,4 +36,4 @@ class TestHexameter(unittest.TestCase):
         12811: nascetur pulchra Troianus origine Caesar,
         """
         dbverse = DatabaseVerse.objects.get(pk=3306)
-        VerseFactory.create(dbverse, DatabaseBridge(), classes=VerseType.HEXAMETER)
+        VerseFactory.create(dbverse.contents, DatabaseBridge(), classes=VerseType.HEXAMETER)

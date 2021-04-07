@@ -53,13 +53,13 @@ def scan_session(dbverses, session):
         scan_result.verse = dbverse
         scan_result.scanned_as = dbverse.verseType
         try:
-            verse = VerseFactory.create(dbverse, DatabaseBridge(False), classes=dbverse.verseType)
+            verse = VerseFactory.create(dbverse.contents, DatabaseBridge(False), classes=dbverse.verseType)
             dbverse.saved = True
             scan_result.structure = verse.structure
             worked_without_dict += 1
         except VerseException:
             try:
-                verse = VerseFactory.create(dbverse, DatabaseBridge(), classes=dbverse.verseType)
+                verse = VerseFactory.create(dbverse.contents, DatabaseBridge(), classes=dbverse.verseType)
                 dbverse.saved = True
                 scan_result.structure = verse.structure
             except VerseException as exc:
@@ -67,7 +67,7 @@ def scan_session(dbverses, session):
                 VerseFactory.get_split_syllables(dbverse.contents)
                 dbverse.saved = False
                 try:
-                    scan_result.failure = exc.exceptions[0][0].message[:69]
+                    scan_result.failure = exc.exceptions[0].message[:69]
                 except IndexError:
                     scan_result.failure = exc.message[:69]
                 scan_result.structure = ""
