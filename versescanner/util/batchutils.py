@@ -53,13 +53,13 @@ def scan_session(dbverses, session):
         scan_result.verse = dbverse
         scan_result.scanned_as = dbverse.verseType
         try:
-            verse = VerseFactory.create(dbverse.contents, DatabaseBridge(False), classes=dbverse.verseType)
+            verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(False), classes=dbverse.verseType)
             dbverse.saved = True
             scan_result.structure = verse.structure
             worked_without_dict += 1
         except VerseException:
             try:
-                verse = VerseFactory.create(dbverse.contents, DatabaseBridge(), classes=dbverse.verseType)
+                verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(), classes=dbverse.verseType)
                 dbverse.saved = True
                 scan_result.structure = verse.structure
             except VerseException as exc:
@@ -83,6 +83,7 @@ def scan_session(dbverses, session):
         if verse_saved != dbverse.saved or scan_result.failure:
             dbverse.save()
         scan_result.save()
+        print(dbverse.id)
     return worked, failed, worked_without_dict
 
 

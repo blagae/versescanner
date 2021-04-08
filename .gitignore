@@ -236,3 +236,6 @@ versescanner/**/bundle.js
 versescanner/**/typescript/src/*.js
 
 djangos/**
+
+# in case we have to do live debugging of the library
+elisio

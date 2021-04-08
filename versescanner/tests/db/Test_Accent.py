@@ -13,7 +13,7 @@ class TestAccent(unittest.TestCase):
 
     def test_accent_lavinia(self):
         verse = VerseFactory.create("Italiam fato profugus Laviniaque venit",
-                                    DatabaseBridge(), classes=VerseType.HEXAMETER)
+                                    bridge=DatabaseBridge(), classes=VerseType.HEXAMETER)
         verse.parse()
         # italiam
         self.assertEqual(verse.words[0].syllables[0].stressed, False)
