@@ -83,7 +83,6 @@ def scan_session(dbverses, session):
         if verse_saved != dbverse.saved or scan_result.failure:
             dbverse.save()
         scan_result.save()
-        print(dbverse.id)
     return worked, failed, worked_without_dict
 
 

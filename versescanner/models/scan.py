@@ -15,7 +15,7 @@ from .metadata import DatabaseVerse, Poem, Book, Opus, Author
 
 class WordOccurrence(Model):
     verse = ForeignKey(DatabaseVerse, CASCADE, null=True)
-    word = CharField(max_length=20)
+    word = CharField(max_length=20, db_index=True)
     struct = CharField(max_length=10)
 
 
