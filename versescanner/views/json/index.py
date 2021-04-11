@@ -7,10 +7,10 @@ from random import randint
 from django.core import serializers
 from django.http import HttpResponse, Http404, JsonResponse
 
-from elisio.utils.TextDecorator import TextDecorator
-from elisio.verse.VerseFactory import VerseFactory
-from elisio.verse.VerseFactory import VerseType, VerseForm
-from elisio.bridge.Bridge import DummyBridge
+from elisio.utils.textdecorator import TextDecorator
+from elisio.parser.versefactory import VerseFactory
+from elisio.parser.versefactory import VerseType, VerseForm
+from elisio.bridge import DummyBridge
 from versescanner.bridge.DatabaseBridge import DatabaseBridge
 from elisio.exceptions import ScansionException
 from versescanner.models.metadata import Author, Book, Opus, Poem, DatabaseVerse

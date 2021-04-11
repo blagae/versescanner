@@ -1,9 +1,9 @@
 """ module for creating an xml file from given input """
-from elisio.verse.Verse import Foot
-from elisio.verse.VerseFactory import VerseFactory
+from elisio.parser.verse import Foot
+from elisio.parser.versefactory import VerseFactory
 from versescanner.bridge.DatabaseBridge import DatabaseBridge
 from elisio.exceptions import VerseException, ScansionException
-from elisio.verse.VerseFactory import VerseType
+from elisio.parser.versefactory import VerseType
 from versescanner.models.metadata import DatabaseVerse
 from versescanner.models.scan import ScanVerseResult, ScanSession, Batch, DatabaseBatchItem, ObjectType
 

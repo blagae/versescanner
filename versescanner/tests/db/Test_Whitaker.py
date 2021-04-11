@@ -11,7 +11,8 @@ class TestWhitaker(unittest.TestCase):
 
     def test_whitaker_all(self):
         parser = Parser()
-        verses = DatabaseVerse.objects.all()
+        # verses = DatabaseVerse.objects.all()
+        verses = DatabaseVerse.objects.filter(id__lte=500)
         for verse in verses:
             for word in verse.contents.split():
                 try:

@@ -5,7 +5,7 @@ import enumfields.fields
 from django.conf import settings
 from django.db import migrations, models
 
-import elisio.verse.VerseFactory
+import elisio.parser.versefactory
 
 
 class Migration(migrations.Migration):
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                                                        parent_link=True, primary_key=True, serialize=False,
                                                        to='versescanner.BatchItem')),
                 ('contents', models.CharField(max_length=70)),
-                ('scanned_as', enumfields.fields.EnumField(enum=elisio.verse.VerseFactory.VerseType, max_length=10,
+                ('scanned_as', enumfields.fields.EnumField(enum=elisio.parser.versefactory.VerseType, max_length=10,
                                                            null=True)),
             ],
             bases=('versescanner.batchitem',),

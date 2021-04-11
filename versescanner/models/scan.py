@@ -8,7 +8,7 @@ from django.db.models.deletion import CASCADE
 from enumfields import EnumField
 from model_utils.managers import InheritanceManager
 
-from elisio.verse.VerseFactory import VerseType
+from elisio.parser.versefactory import VerseType
 from versescanner.util.utils import get_commit
 from .metadata import DatabaseVerse, Poem, Book, Opus, Author
 

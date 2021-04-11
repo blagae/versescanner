@@ -1,7 +1,7 @@
 ﻿import unittest
 
-from elisio.verse.VerseFactory import VerseFactory
-from elisio.verse.VerseFactory import VerseType
+from elisio.parser.versefactory import VerseFactory
+from elisio.parser.versefactory import VerseType
 from versescanner.util.utils import set_django
 
 set_django()
@@ -18,8 +18,8 @@ class TestHexameter(unittest.TestCase):
         """ frivolous check to see how many verses work """
         save = WordOccurrence.objects.count() > 0
         threshold = 14 if save else 12
-        verses = DatabaseVerse.objects.all()
-        # verses = DatabaseVerse.objects.filter(id__lte=500)
+        # verses = DatabaseVerse.objects.all()
+        verses = DatabaseVerse.objects.filter(id__lte=500)
         worked, failed, worked_wo_dict = scan_verses(verses, "test_hexameter_scan_all")
         # canary test: over 91% of verses must succeed
         result = str(worked_wo_dict) + " worked without dict, " + str(worked) + " worked, " + str(failed) + " failed"

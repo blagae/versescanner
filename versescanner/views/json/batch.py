@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404, HttpResponseForbidden
 from versescanner.util.batchutils import scan_session
 from versescanner.models.scan import Batch, DatabaseBatchItem, InputBatchItem, ScanSession, ObjectType, RelationType
 from random import randint
-from elisio.verse.VerseFactory import VerseType
+from elisio.parser.versefactory import VerseType
 from django.db.models import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 

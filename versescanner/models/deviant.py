@@ -4,7 +4,7 @@ from django.db.models import Model, CharField, ForeignKey, IntegerField
 from django.db.models.deletion import CASCADE
 from enumfields import EnumField
 
-from elisio.Syllable import Weight, Syllable
+from elisio.syllable import Weight, Syllable
 from elisio.exceptions import WordException
 
 from versescanner.util.utils import set_django

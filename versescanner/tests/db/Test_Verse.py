@@ -1,8 +1,8 @@
 """ Test classes for Verse scanning """
 import unittest
-from elisio.verse.Verse import Verse
-from elisio.Word import Word
-from elisio.verse.VerseFactory import VerseFactory
+from elisio.parser.verse import Verse
+from elisio.word import Word
+from elisio.parser.versefactory import VerseFactory
 from versescanner.util.utils import set_django
 
 set_django()

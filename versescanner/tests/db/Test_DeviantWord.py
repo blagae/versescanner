@@ -1,7 +1,7 @@
 ﻿import unittest
 
-from elisio.Syllable import Syllable
-from elisio.Word import Word, Weight
+from elisio.syllable import Syllable
+from elisio.word import Word, Weight
 from versescanner.util.utils import set_django
 
 set_django()

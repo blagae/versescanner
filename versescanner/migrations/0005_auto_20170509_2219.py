@@ -5,7 +5,7 @@ import enumfields.fields
 from django.conf import settings
 from django.db import migrations, models
 
-import elisio.verse.VerseFactory
+import elisio.parser.versefactory
 import versescanner.util.utils
 
 
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='scanverseresult',
             name='scanned_as',
-            field=enumfields.fields.EnumField(default=1, enum=elisio.verse.VerseFactory.VerseType, max_length=10),
+            field=enumfields.fields.EnumField(default=1, enum=elisio.parser.versefactory.VerseType, max_length=10),
             preserve_default=False,
         ),
     ]
