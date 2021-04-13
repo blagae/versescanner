@@ -15,7 +15,6 @@ class TestWhitaker(unittest.TestCase):
         verses = DatabaseVerse.objects.filter(id__lte=500)
         for verse in verses:
             for word in verse.contents.split():
-                try:
-                    floo = ''.join(x for x in word if x.isalpha())
-                    if floo:
-                        parser.parse(floo)
+                floo = ''.join(x for x in word if x.isalpha())
+                if floo:
+                    parser.parse(floo)
