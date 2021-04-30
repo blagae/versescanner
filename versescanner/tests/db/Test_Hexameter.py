@@ -23,11 +23,11 @@ class TestHexameter(unittest.TestCase):
         worked, failed, worked_wo_dict = scan_verses(verses, "test_hexameter_scan_all")
         # canary test: over 91% of verses must succeed
         result = str(worked_wo_dict) + " worked without dict, " + str(worked) + " worked, " + str(failed) + " failed"
-        if worked / failed < threshold:
-            self.fail(result)
         # canary test: if no verses fail, then we are probably too lax
-        elif failed == 0:
+        if failed == 0:
             self.fail("improbable result: " + result)
+        elif worked / failed < threshold:
+            self.fail(result)
         else:
             print(result)
 
