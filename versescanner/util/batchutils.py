@@ -53,24 +53,25 @@ def scan_session(dbverses, session):
         scan_result.verse = dbverse
         scan_result.scanned_as = dbverse.verseType
         try:
-            verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(False), classes=dbverse.verseType)
+            verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(False), creators=dbverse.verseType)
             dbverse.saved = True
-            scan_result.structure = verse.structure
+            scan_result.structure = verse.structure()
             worked_without_dict += 1
         except VerseException:
             try:
-                verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(), classes=dbverse.verseType)
+                verse = VerseFactory.create(dbverse.contents, dbverse.id, DatabaseBridge(), creators=dbverse.verseType)
                 dbverse.saved = True
-                scan_result.structure = verse.structure
+                scan_result.structure = verse.structure()
             except VerseException as exc:
                 failed += 1
-                VerseFactory.get_split_syllables(dbverse.contents)
                 dbverse.saved = False
                 try:
                     scan_result.failure = exc.exceptions[0].message[:69]
                 except IndexError:
                     scan_result.failure = exc.message[:69]
                 scan_result.structure = ""
+            except IndexError:
+                scan_result.failure = exc.message[:69]
             else:
                 worked += 1
         except ScansionException as exc:
@@ -91,7 +92,7 @@ def scan_batch_from_flat_file(file):
         j = 0
         for dbverse in file.readlines():
             try:
-                verse = VerseFactory.create(dbverse, DatabaseBridge(), classes=VerseType.HEXAMETER)
+                verse = VerseFactory.create(dbverse, DatabaseBridge(), creators=VerseType.HEXAMETER)
                 d = "\t"
                 for i in range(4):
                     if verse.feet[i] == Foot.DACTYLUS:

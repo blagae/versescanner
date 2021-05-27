@@ -7,7 +7,7 @@ from random import randint
 from django.core import serializers
 from django.http import HttpResponse, Http404, JsonResponse
 
-from elisio.utils.textdecorator import TextDecorator
+from elisio.utils.textdecorator import decorate
 from elisio.parser.versefactory import VerseFactory
 from elisio.parser.versefactory import VerseType, VerseForm
 from elisio.bridge import DummyBridge
@@ -83,8 +83,8 @@ def scan_verse_text(request, txt, metadata=None):
             verse_type = VerseType.UNKNOWN
         metadata['verse']['type'] = verse_type.name
         update_req_with_verse(request, metadata)
-        verse = VerseFactory.create(txt, dic, classes=verse_type)
-        s = TextDecorator(verse).decorate()
+        verse = VerseFactory.create(txt, dic, creators=verse_type)
+        s = decorate(verse)
         data["text"] = s
         data["zeleny"] = verse.get_zeleny_score()
     except ScansionException as ex:

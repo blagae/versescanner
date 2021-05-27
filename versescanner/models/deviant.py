@@ -33,7 +33,7 @@ class DeviantWord(Model):
         sylls = DeviantSyllable.objects.filter(word=self).order_by('sequence')
         result = []
         for syll in sylls:
-            result.append(Syllable(syll.contents, False, syll.weight))
+            result.append(Syllable.make_empty_syllable(syll.contents, syll.weight))  # TODO may break
         return result
 
     @staticmethod

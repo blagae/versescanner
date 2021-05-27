@@ -66,7 +66,7 @@ class TestDeviantWord(unittest.TestCase):
         # TODO: deviant word ?
         word = Word('ianua')
         weights = [Weight.ANCEPS, Weight.LIGHT, Weight.HEAVY]
-        sylls = [Syllable('ia'), Syllable('nu'), Syllable('a')]
+        sylls = [Syllable.make_empty_syllable('ia'), Syllable.make_empty_syllable('nu'), Syllable.make_empty_syllable('a')]
         word.split(DatabaseBridge())
         self.assertEqual(weights, word.get_syllable_structure())
         self.assertEqual(sylls, word.syllables)
@@ -74,21 +74,21 @@ class TestDeviantWord(unittest.TestCase):
     def test_word_split_semiv_enclitic(self):
         """ scan word with final -e as anceps """
         word = self.construct_word('cuique')
-        syllable_list = [Syllable('cui', False), Syllable('que')]
+        syllable_list = [Syllable.make_empty_syllable('cui'), Syllable.make_empty_syllable('que')]
         word.split(DatabaseBridge())
         self.assertEqual(word.syllables, syllable_list)
 
     def test_word_split_lexical(self):
         """ common word must be in the dictionary """
         word = self.construct_word('cui')
-        syllable_list = [Syllable('cui', False)]
+        syllable_list = [Syllable.make_empty_syllable('cui')]
         word.split(DatabaseBridge())
         self.assertEqual(word.syllables, syllable_list)
 
     def test_word_split_lexical_exc(self):
         """ common word must be in the dictionary """
         word = self.construct_word('huic')
-        syllable_list = [Syllable('huic', False)]
+        syllable_list = [Syllable.make_empty_syllable('huic')]
         word.split(DatabaseBridge())
         self.assertEqual(word.syllables, syllable_list)
 
@@ -102,13 +102,13 @@ class TestDeviantWord(unittest.TestCase):
     def test_word_create_deviant(self):
         word = self.construct_word('lavinia')
         word.split(DatabaseBridge())
-        expected = [Syllable('la'), Syllable('vin'), Syllable('ia')]
+        expected = [Syllable.make_empty_syllable('la'), Syllable.make_empty_syllable('vin'), Syllable.make_empty_syllable('ia')]
         self.assertEqual(word.syllables, expected)
 
     def test_word_create_deviant_smvl(self):
         word = self.construct_word('lauinja')
         word.split(DatabaseBridge())
-        expected = [Syllable('la'), Syllable('vin'), Syllable('ia')]
+        expected = [Syllable.make_empty_syllable('la'), Syllable.make_empty_syllable('vin'), Syllable.make_empty_syllable('ia')]
         self.assertEqual(word.syllables, expected)
 
     def test_word_scan_weird_word(self):
