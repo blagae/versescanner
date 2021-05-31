@@ -1,12 +1,14 @@
 import json
-from django.http import HttpResponse, Http404, HttpResponseForbidden
-
-from versescanner.util.batchutils import scan_session
-from versescanner.models.scan import Batch, DatabaseBatchItem, InputBatchItem, ScanSession, ObjectType, RelationType
 from random import randint
-from elisio.parser.versefactory import VerseType
-from django.db.models import ObjectDoesNotExist
+
 from django.core.exceptions import ValidationError
+from django.db.models import ObjectDoesNotExist
+from django.http import Http404, HttpResponse, HttpResponseForbidden
+from elisio.parser.versefactory import VerseType
+
+from versescanner.models.scan import (Batch, DatabaseBatchItem, InputBatchItem,
+                                      ObjectType, RelationType, ScanSession)
+from versescanner.util.batchutils import scan_session
 
 
 def clear_batch_session(request):

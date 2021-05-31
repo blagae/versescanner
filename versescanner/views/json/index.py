@@ -5,16 +5,15 @@ import time
 from random import randint
 
 from django.core import serializers
-from django.http import HttpResponse, Http404, JsonResponse
-
-from elisio.utils.textdecorator import decorate
-from elisio.parser.versefactory import VerseFactory
-from elisio.parser.versefactory import VerseType, VerseForm
+from django.http import Http404, HttpResponse, JsonResponse
 from elisio.bridge import DummyBridge
-from versescanner.bridge.DatabaseBridge import DatabaseBridge
 from elisio.exceptions import ScansionException
-from versescanner.models.metadata import Author, Book, Opus, Poem, DatabaseVerse
+from elisio.parser.versefactory import VerseFactory, VerseForm, VerseType
 from elisio.utils.numerals import int_to_roman
+from elisio.utils.textdecorator import decorate
+
+from versescanner.bridge.DatabaseBridge import DatabaseBridge
+from versescanner.models.metadata import Author, Book, Opus, Poem, Verse
 
 
 def get_list_type(request, obj_type, key):
@@ -33,7 +32,7 @@ def get_list_type(request, obj_type, key):
 
 def get_poem_length(request, key):
     primary = int(key)
-    return HttpResponse(DatabaseVerse.get_maximum_verse_num(poem=primary))
+    return HttpResponse(Verse.get_maximum_verse_num(poem=primary))
 
 
 def get_authors(request):
@@ -67,7 +66,7 @@ def get_verse(request, poem, verse):
 def get_verse_object(poem, verse):
     primary = int(verse)
     poem_pk = int(poem)
-    return DatabaseVerse.get_verse_from_db(poem_pk, primary)
+    return Verse.get_verse_from_db(poem_pk, primary)
 
 
 def scan_verse_text(request, txt, metadata=None):
@@ -96,21 +95,21 @@ def scan_verse(request, poem, verse):
     """ get a verse through a JSON request """
     primary = int(verse)
     poem_pk = int(poem)
-    obj = DatabaseVerse.get_verse_from_db(poem_pk, primary)
+    obj = Verse.get_verse_from_db(poem_pk, primary)
     metadata = get_metadata(obj)
     return scan_verse_text(request, obj.contents, metadata)
 
 
 def get_random_verse(request):
-    count = DatabaseVerse.objects.count()
+    count = Verse.objects.count()
     if count < 2:
         return Http404()
     verse = None
     while verse is None:
         verse_num = randint(1, count)
         try:
-            verse = DatabaseVerse.objects.get(id=verse_num)
-        except DatabaseVerse.DoesNotExist:
+            verse = Verse.objects.get(id=verse_num)
+        except Verse.DoesNotExist:
             pass
     metadata = get_metadata(verse)
     return HttpResponse(json.dumps(metadata), content_type='application/json')
@@ -122,7 +121,7 @@ def get_verse_forms(request):
 
 
 def get_metadata(verse):
-    if isinstance(verse, DatabaseVerse):
+    if isinstance(verse, Verse):
         metadata = {'verse': {'text': verse.contents,
                               'number': verse.number,
                               'id': verse.id,

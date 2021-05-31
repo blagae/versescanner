@@ -3,18 +3,20 @@ from functools import total_ordering
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db.models import Model, CharField, ForeignKey, IntegerField, DateTimeField, Q
+from django.db.models import (CharField, DateTimeField, ForeignKey,
+                              IntegerField, Model, Q)
 from django.db.models.deletion import CASCADE
+from elisio.parser.versefactory import VerseType
 from enumfields import EnumField
 from model_utils.managers import InheritanceManager
 
-from elisio.parser.versefactory import VerseType
 from versescanner.util.utils import get_commit
-from .metadata import DatabaseVerse, Poem, Book, Opus, Author
+
+from .metadata import Author, Book, Opus, Poem, Verse
 
 
 class WordOccurrence(Model):
-    verse = ForeignKey(DatabaseVerse, CASCADE, null=True)
+    verse = ForeignKey(Verse, CASCADE, null=True)
     word = CharField(max_length=20, db_index=True)
     struct = CharField(max_length=10)
 
@@ -45,7 +47,7 @@ class Batch(Model):
         return query
 
     def get_verses(self):
-        return DatabaseVerse.objects.filter(self.build_batch_query())
+        return Verse.objects.filter(self.build_batch_query())
 
     def get_input_items(self):
         return (item for item in self.batchitem_set.all() if hasattr(item, "contents"))
@@ -147,7 +149,7 @@ class DatabaseBatchItem(BatchItem):
 
     def get_object_manager(self):
         if self.object_type == ObjectType.VERSE:
-            return DatabaseVerse.objects
+            return Verse.objects
         if self.object_type == ObjectType.POEM:
             return Poem.objects
         if self.object_type == ObjectType.BOOK:
@@ -176,7 +178,7 @@ class DatabaseBatchItem(BatchItem):
         raise ValidationError("Incorrect object type")
 
     def get_verses(self):
-        return DatabaseVerse.objects.filter(self.get_verse_query())
+        return Verse.objects.filter(self.get_verse_query())
 
 
 class InputBatchItem(BatchItem):
@@ -195,7 +197,7 @@ class ScanSession(Model):
 
 
 class ScanVerseResult(Model):
-    verse = ForeignKey(DatabaseVerse, CASCADE)
+    verse = ForeignKey(Verse, CASCADE)
     session = ForeignKey(ScanSession, CASCADE)
     failure = CharField(max_length=70, blank=True)
     structure = CharField(max_length=8, blank=True)

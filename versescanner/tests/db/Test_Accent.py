@@ -1,7 +1,7 @@
 import unittest
 
-from elisio.parser.versefactory import VerseFactory
-from elisio.parser.versefactory import VerseType
+from elisio.parser.versefactory import VerseFactory, VerseType
+
 from versescanner.util.utils import set_django
 
 set_django()

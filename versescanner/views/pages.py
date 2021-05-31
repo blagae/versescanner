@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
-from elisio.utils.numerals import roman_to_int
 from elisio.parser.versefactory import VerseForm
-from versescanner.models.forms import AuthorForm, OpusForm
-from versescanner.models import Author, Opus, Book, Poem
+from elisio.utils.numerals import roman_to_int
+
 import versescanner.util.dbhandler
 import versescanner.util.filemanager
+from versescanner.models import Author, Book, Opus, Poem
+from versescanner.models.forms import AuthorForm, OpusForm
 
 
 def index_page(request):

@@ -1,5 +1,6 @@
 """ tests for the frontend """
 import unittest
+
 from versescanner.util.utils import set_django
 
 set_django()

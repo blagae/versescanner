@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseForbidden
+
 import versescanner.util.filemanager
-from versescanner.models import Author, Period, Opus, Genre
+from versescanner.models import Author, Genre, Opus, Period
 
 
 def sync_files(request):

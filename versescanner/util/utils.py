@@ -17,6 +17,7 @@ def set_django():
 def recreate_db():
     if "psycopg2" in local.DATABASES['default']['ENGINE']:
         import psycopg2
+
         # http://stackoverflow.com/q/22357856
         with psycopg2.connect(database="postgres", user="postgres", password=local.DB_SUPERUSER_PASSWORD) as conn:
             with conn.cursor() as cur:

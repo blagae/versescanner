@@ -1,8 +1,8 @@
-from django.db.models import Model, CharField, ForeignKey, IntegerField, BooleanField, Max
+from django.db.models import (BooleanField, CharField, ForeignKey,
+                              IntegerField, Max, Model)
 from django.db.models.deletion import CASCADE
+from elisio.parser.versefactory import VerseForm, VerseType
 from enumfields import EnumField
-
-from elisio.parser.versefactory import VerseType, VerseForm
 
 
 class Period(Model):
@@ -88,7 +88,7 @@ class Poem(Model):
         return str(self.number)
 
 
-class DatabaseVerse(Model):
+class Verse(Model):
     """ model class that contains a Verse """
     poem = ForeignKey(Poem, CASCADE)
     number = IntegerField()
@@ -100,19 +100,19 @@ class DatabaseVerse(Model):
     def get_parent(self):
         return self.poem
 
-    def get_verse(self):
-        """ create a Verse object from this DatabaseVerse """
+    def get_verse(self) -> str:
+        """ create a Verse object from this Verse """
         return self.contents
 
     @staticmethod
     def get_maximum_verse_num(poem):
         """ get the highest verse number in this poem """
-        return (DatabaseVerse.objects.filter(poem=poem)
+        return (Verse.objects.filter(poem=poem)
                 .aggregate(Max('number'))['number__max'])
 
     @staticmethod
     def get_verse_from_db(poem, verse):
         """ django.core.serializers requires this return value
         to be iterable (i.e. a resultset) """
-        result = DatabaseVerse.objects.get(poem=poem, number=verse)
+        result = Verse.objects.get(poem=poem, number=verse)
         return result

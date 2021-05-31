@@ -1,11 +1,10 @@
 import re
 
-from django.db.models import Model, CharField, ForeignKey, IntegerField
+from django.db.models import CharField, ForeignKey, IntegerField, Model
 from django.db.models.deletion import CASCADE
-from enumfields import EnumField
-
-from elisio.syllable import Weight, Syllable
 from elisio.exceptions import WordException
+from elisio.syllable import Syllable, Weight
+from enumfields import EnumField
 
 from versescanner.util.utils import set_django
 

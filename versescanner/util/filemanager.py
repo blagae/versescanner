@@ -2,14 +2,15 @@
 import re
 import xml.dom.minidom as mini
 import xml.etree.ElementTree as Et
-from os import listdir, getcwd
+from os import getcwd, listdir
 from os.path import isfile, join
 
-from versescanner.util.dbhandler import create_verses, find_author, find_opus, find_book, find_poem
 from elisio.parser.versefactory import VerseForm
-from versescanner.models.metadata import Poem
 from elisio.utils.numerals import int_to_roman
 
+from versescanner.models.metadata import Poem
+from versescanner.util.dbhandler import (create_verses, find_author, find_book,
+                                         find_opus, find_poem)
 
 form_extensions = {
     'hen': VerseForm.HENDECASYLLABUS,
@@ -85,7 +86,7 @@ def fill_xml_object():
         count = 1
         for verse in verses:
             obj = Et.SubElement(root, "object",
-                                {'model': 'versescanner.DatabaseVerse'})
+                                {'model': 'versescanner.Verse'})
             poem_field = Et.SubElement(obj, "field",
                                        {'type': 'ForeignKey',
                                         'name': 'poem'})
@@ -128,7 +129,7 @@ def sync_files():
         f = open(name, 'w', encoding='utf-8')
         previous_verse = 0
         # force order in which they were inserted
-        for verse in poem.databaseverse_set.order_by('id').all():
+        for verse in poem.verse_set.order_by('id').all():
             item = verse.contents
             if verse.number != previous_verse + 1 or verse.alternative:
                 prefix = str(verse.number) + verse.alternative + '$'

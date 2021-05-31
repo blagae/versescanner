@@ -1,6 +1,7 @@
 """ module for creating an xml file from given input """
-from versescanner.models.metadata import DatabaseVerse, Author, Book, Opus, Poem
-from elisio.utils.numerals import roman_to_int, int_to_roman
+from elisio.utils.numerals import int_to_roman, roman_to_int
+
+from versescanner.models.metadata import Author, Book, Opus, Poem, Verse
 
 
 def find_author(abbr):
@@ -31,14 +32,14 @@ def find_poem(book, number=None, create=False):
 
 
 def create_verses(poem, verses):
-    db_lines = DatabaseVerse.objects.filter(poem=poem)
+    db_lines = Verse.objects.filter(poem=poem)
     if len(verses) <= db_lines.count():
         return
     db_lines.delete()
     count = 1
     entries = []
     for verse in verses:
-        item = DatabaseVerse()
+        item = Verse()
         item.poem = poem
         parsed = verse.split('$')
         if len(parsed) > 1:
@@ -53,13 +54,13 @@ def create_verses(poem, verses):
         vf = poem.verseForm.get_verse_types()
         item.verseType = vf[count % len(vf)]
         entries.append(item)
-    DatabaseVerse.objects.bulk_create(entries)
+    Verse.objects.bulk_create(entries)
 
 
 def get_location_string(dbverse):
-    if not isinstance(dbverse, DatabaseVerse):
+    if not isinstance(dbverse, Verse):
         # dbverse is an id
-        dbverse = DatabaseVerse.objects.get(dbverse)
+        dbverse = Verse.objects.get(dbverse)
     poem = dbverse.poem
     book = poem.book
     opus = book.opus

@@ -1,6 +1,7 @@
+from elisio.bridge import Bridge
 from elisio.sound import SoundFactory
 from elisio.syllable import Weight
-from elisio.bridge import Bridge
+
 from versescanner.models.deviant import DeviantWord
 from versescanner.models.scan import WordOccurrence
 

@@ -1,16 +1,17 @@
 """ module for creating an xml file from given input """
+from elisio.exceptions import ScansionException, VerseException
 from elisio.parser.verse import Foot
-from elisio.parser.versefactory import VerseFactory
+from elisio.parser.versefactory import VerseFactory, VerseType
+
 from versescanner.bridge.DatabaseBridge import DatabaseBridge
-from elisio.exceptions import VerseException, ScansionException
-from elisio.parser.versefactory import VerseType
-from versescanner.models.metadata import DatabaseVerse
-from versescanner.models.scan import ScanVerseResult, ScanSession, Batch, DatabaseBatchItem, ObjectType
+from versescanner.models.metadata import Verse
+from versescanner.models.scan import (Batch, DatabaseBatchItem, ObjectType,
+                                      ScanSession, ScanVerseResult)
 
 
 def find_all_verses_containing(regex, must_be_parsed=False):
     import re
-    dbverses = DatabaseVerse.objects.all()
+    dbverses = Verse.objects.all()
     total = []
     for dbverse in dbverses:
         words = VerseFactory.split(dbverse.contents)
@@ -70,8 +71,6 @@ def scan_session(dbverses, session):
                 except IndexError:
                     scan_result.failure = exc.message[:69]
                 scan_result.structure = ""
-            except IndexError:
-                scan_result.failure = exc.message[:69]
             else:
                 worked += 1
         except ScansionException as exc:
