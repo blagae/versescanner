@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ScanSession',
+            name='BatchRun',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('timing', models.DateTimeField(auto_now=True)),
@@ -21,17 +21,17 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='ScanVerseResult',
+            name='BatchRunResult',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('failure', models.CharField(blank=True, max_length=70)),
                 ('structure', models.CharField(max_length=8)),
                 ('zeleny', models.CharField(max_length=17)),
-                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.ScanSession')),
+                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.BatchRun')),
             ],
         ),
         migrations.AddField(
-            model_name='scanverseresult',
+            model_name='batchrunresult',
             name='verse',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='versescanner.Verse'),
         ),

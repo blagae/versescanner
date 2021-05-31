@@ -1,4 +1,4 @@
-import enum
+from enum import Enum
 from functools import total_ordering
 
 from django.contrib.auth.models import User
@@ -36,7 +36,7 @@ class Batch(Model):
             try:
                 dbitem = item.databasebatchitem
                 q = dbitem.get_verse_query()
-                if query is None:
+                if not query:
                     query = q
                 elif dbitem.relation == RelationType.EXCEPT:
                     query &= ~dbitem.get_verse_query()
@@ -65,7 +65,7 @@ class BatchItem(Model):
 
 
 @total_ordering
-class ObjectType(enum.Enum):
+class ObjectType(Enum):
     VERSE = 1
     POEM = 2
     BOOK = 3
@@ -79,7 +79,7 @@ class ObjectType(enum.Enum):
         return NotImplemented
 
 
-class RelationType(enum.Enum):
+class RelationType(Enum):
     EXCEPT = 1
     AND = 2
     OR = 3
@@ -172,7 +172,7 @@ class DatabaseBatchItem(BatchItem):
         if self.object_type == ObjectType.OPUS:
             return Q(poem__book__opus_id=self.object_id)
         if self.object_type == ObjectType.AUTHOR:
-            if self.object_id == 0:
+            if not self.object_id:
                 return Q()
             return Q(poem__book__opus__author_id=self.object_id)
         raise ValidationError("Incorrect object type")
@@ -189,16 +189,17 @@ class InputBatchItem(BatchItem):
         return 1
 
 
-class ScanSession(Model):
+class BatchRun(Model):
     batch = ForeignKey(Batch, CASCADE, null=True, default=None)
     timing = DateTimeField(auto_now=True)
     initiator = CharField(max_length=80, default='')
     commit = CharField(max_length=80, default=get_commit)
 
 
-class ScanVerseResult(Model):
-    verse = ForeignKey(Verse, CASCADE)
-    session = ForeignKey(ScanSession, CASCADE)
+class BatchRunResult(Model):
+    verse = ForeignKey(Verse, CASCADE)  # TODO make optional
+    session = ForeignKey(BatchRun, CASCADE)
+    # TODO fk to BatchItem
     failure = CharField(max_length=70, blank=True)
     structure = CharField(max_length=8, blank=True)
     zeleny = CharField(max_length=17, blank=True)

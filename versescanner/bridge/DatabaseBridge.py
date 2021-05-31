@@ -25,7 +25,7 @@ class DatabaseBridge(Bridge):
         if not self.use_dict:
             return []
         structs = []
-        for hit in WordOccurrence.objects.filter(word=word):
+        for hit in WordOccurrence.objects.filter(word=word):  # TODO distinct
             strc = hit.struct
             if len(strc) == 1 and strc[-1] == "0":
                 continue
@@ -39,4 +39,5 @@ class DatabaseBridge(Bridge):
         return WordOccurrence(word=txt, struct=strct, verse_id=db_id)
 
     def dump(self, entries):
+        # TODO don't make if item exists already ?
         WordOccurrence.objects.bulk_create(entries)

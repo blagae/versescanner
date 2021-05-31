@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponse, HttpResponseForbidden
 from elisio.parser.versefactory import VerseType
 
 from versescanner.models.scan import (Batch, DatabaseBatchItem, InputBatchItem,
-                                      ObjectType, RelationType, ScanSession)
+                                      ObjectType, RelationType, BatchRun)
 from versescanner.util.batchutils import scan_session
 
 
@@ -28,7 +28,7 @@ def get_batches(request):
                     'itemsNow': batch.get_number_of_verses(),
                     'name': batch.name
                     }
-            scans = ScanSession.objects.filter(batch=batch).order_by('timing')
+            scans = BatchRun.objects.filter(batch=batch).order_by('timing')
             if scans.count() > 0:
                 data['scans'] = {'number': scans.count(),
                                  'recent': str(scans[scans.count() - 1].timing)
@@ -117,7 +117,7 @@ def run_batch(request, batchid):
     if request.user != batch.user:
         return HttpResponseForbidden()
     verses = batch.get_verses()
-    session = ScanSession()
+    session = BatchRun()
     session.batch = batch
     session.initiator = batch.user.username
     session.save()

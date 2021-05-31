@@ -33,21 +33,21 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RemoveField(
-            model_name='scansession',
+            model_name='batchrun',
             name='user',
         ),
         migrations.AlterField(
-            model_name='scansession',
+            model_name='batchrun',
             name='initiator',
             field=models.CharField(default='', max_length=40),
         ),
         migrations.AlterField(
-            model_name='scanverseresult',
+            model_name='batchrunresult',
             name='structure',
             field=models.CharField(blank=True, max_length=8),
         ),
         migrations.AlterField(
-            model_name='scanverseresult',
+            model_name='batchrunresult',
             name='zeleny',
             field=models.CharField(blank=True, max_length=17),
         ),
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='versescanner.BatchItem'),
         ),
         migrations.AddField(
-            model_name='scansession',
+            model_name='batchrun',
             name='batch',
             field=models.ForeignKey(null=True, default=None, on_delete=django.db.models.deletion.CASCADE,
                                     to='versescanner.Batch'),

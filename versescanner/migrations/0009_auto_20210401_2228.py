@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='scansession',
+            model_name='batchrun',
             name='commit',
             field=models.CharField(default=versescanner.util.utils.get_commit, max_length=80),
         ),
         migrations.AlterField(
-            model_name='scansession',
+            model_name='batchrun',
             name='initiator',
             field=models.CharField(default='', max_length=80),
         ),

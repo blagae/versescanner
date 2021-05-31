@@ -18,22 +18,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='scansession',
+            model_name='batchrun',
             name='user',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)
         ),
         migrations.AlterField(
-            model_name='scansession',
+            model_name='batchrun',
             name='commit',
             field=models.CharField(default=versescanner.util.utils.get_commit, max_length=40),
         ),
         migrations.AlterField(
-            model_name='scansession',
+            model_name='batchrun',
             name='initiator',
             field=models.CharField(max_length=40, null=True),
         ),
         migrations.AddField(
-            model_name='scanverseresult',
+            model_name='batchrunresult',
             name='scanned_as',
             field=enumfields.fields.EnumField(default=1, enum=elisio.parser.versefactory.VerseType, max_length=10),
             preserve_default=False,

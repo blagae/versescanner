@@ -6,7 +6,7 @@ from elisio.parser.versefactory import VerseFactory, VerseType
 from versescanner.bridge.DatabaseBridge import DatabaseBridge
 from versescanner.models.metadata import Verse
 from versescanner.models.scan import (Batch, DatabaseBatchItem, ObjectType,
-                                      ScanSession, ScanVerseResult)
+                                      BatchRun, BatchRunResult)
 
 
 def find_all_verses_containing(regex, must_be_parsed=False):
@@ -36,7 +36,7 @@ def scan_verses(dbverses, initiator):
     batch_item.object_type = ObjectType.ALL
     batch_item.object_id = 0
     batch_item.save()
-    session = ScanSession()
+    session = BatchRun()
     #session.batch = batch
     #session.initiator = initiator
     session.save()
@@ -49,7 +49,7 @@ def scan_session(dbverses, session):
     failed = 0
     for dbverse in dbverses:
         verse_saved = dbverse.saved
-        scan_result = ScanVerseResult()
+        scan_result = BatchRunResult()
         scan_result.session = session
         scan_result.verse = dbverse
         scan_result.scanned_as = dbverse.verseType
