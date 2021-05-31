@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from django.db.models import CharField, ForeignKey, IntegerField, Model
 from django.db.models.deletion import CASCADE
@@ -12,34 +13,20 @@ set_django()
 
 class DeviantWord(Model):
     """ model class for the Engine: highest level """
-    words = []
     stem = CharField(max_length=25)
 
     @staticmethod
-    def find(text):
+    def find(text) -> Optional["DeviantWord"]:
         """ check for a regex in the db that matches this word """
-        DeviantWord.get_list()
-        result = [word for word in DeviantWord.words
-                  if re.compile(word.stem).match(text)]
-        if len(result) > 1:
-            raise WordException
-        if not result:
-            return None
-        return result[0]
+        result = [word for word in DeviantWord.objects.all() if re.compile(word.stem).match(text)]
+        if result:
+            return result[0]
+        return None
 
-    def get_syllables(self):
+    def get_syllables(self) -> list[Syllable]:
         """ get the syllables for this deviant word """
         sylls = DeviantSyllable.objects.filter(word=self).order_by('sequence')
-        result = []
-        for syll in sylls:
-            result.append(Syllable.make_empty_syllable(syll.contents, syll.weight))  # TODO may break
-        return result
-
-    @staticmethod
-    def get_list():
-        """ get full list of deviant words in memory """
-        if len(DeviantWord.words) < 1:
-            DeviantWord.words = DeviantWord.objects.all()
+        return [Syllable.make_empty_syllable(syll.contents, syll.weight) for syll in sylls]
 
 
 class DeviantSyllable(Model):

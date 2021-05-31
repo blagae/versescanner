@@ -12,7 +12,7 @@ class Period(Model):
     end_year = IntegerField()
     description = CharField(max_length=200)
 
-    def __str__(self):
+    def __repr__(self):
         return self.name
 
 
@@ -30,7 +30,7 @@ class Author(Model):
     def get_parent(self):
         return None
 
-    def __str__(self):
+    def __repr__(self):
         return self.short_name
 
 
@@ -39,7 +39,7 @@ class Genre(Model):
     name = CharField(max_length=20)
     description = CharField(max_length=200)
 
-    def __str__(self):
+    def __repr__(self):
         return self.name
 
 
@@ -58,7 +58,7 @@ class Opus(Model):
     def get_parent(self):
         return self.author
 
-    def __str__(self):
+    def __repr__(self):
         return self.full_name
 
 
@@ -70,8 +70,8 @@ class Book(Model):
     def get_parent(self):
         return self.opus
 
-    def __str__(self):
-        return self.opus.__str__() + " " + str(self.number)
+    def __repr__(self):
+        return f"{self.opus} {self.number}"
 
 
 class Poem(Model):
@@ -84,7 +84,7 @@ class Poem(Model):
     def get_parent(self):
         return self.book
 
-    def __str__(self):
+    def __repr__(self):
         return str(self.number)
 
 
@@ -107,12 +107,9 @@ class Verse(Model):
     @staticmethod
     def get_maximum_verse_num(poem):
         """ get the highest verse number in this poem """
-        return (Verse.objects.filter(poem=poem)
-                .aggregate(Max('number'))['number__max'])
+        return Verse.objects.filter(poem=poem).aggregate(Max('number'))['number__max']
 
     @staticmethod
     def get_verse_from_db(poem, verse):
-        """ django.core.serializers requires this return value
-        to be iterable (i.e. a resultset) """
-        result = Verse.objects.get(poem=poem, number=verse)
-        return result
+        """ django.core.serializers requires this return value to be iterable (i.e. a resultset) """
+        return Verse.objects.get(poem=poem, number=verse)
