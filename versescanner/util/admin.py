@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from versescanner.models.metadata import (Author, Book, Genre, Opus, Period,
-                                          Poem)
+from .models.metadata import Author, Book, Genre, Opus, Period, Poem
 
 # currently no need for admin classes
 admin.site.register(Period)

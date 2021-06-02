@@ -7,10 +7,10 @@ from django.shortcuts import render
 from elisio.parser.versefactory import VerseForm
 from elisio.utils.numerals import roman_to_int
 
-import versescanner.util.dbhandler
-import versescanner.util.filemanager
-from versescanner.models import Author, Book, Opus, Poem
-from versescanner.models.forms import AuthorForm, OpusForm
+from ..util.dbhandler import find_author, find_opus, find_book, find_poem, create_verses
+from ..util.filemanager import clean_name
+from ..models import Author, Book, Opus, Poem
+from ..models.forms import AuthorForm, OpusForm
 
 
 def index_page(request):
@@ -86,13 +86,13 @@ def manage_page(request):
         return HttpResponseRedirect('/')
     if request.method == 'GET':
         return render(request, 'manage.html')
-    split = versescanner.util.filemanager.clean_name(request.POST['poem'])
+    split = clean_name(request.POST['poem'])
     try:
-        author = versescanner.util.dbhandler.find_author(split[0])
+        author = find_author(split[0])
     except Author.DoesNotExist:
         return render(request, 'manage.html', {'form': AuthorForm(data={'abbreviation': split[0]})})
     try:
-        opus = versescanner.util.dbhandler.find_opus(author, split[1])
+        opus = find_opus(author, split[1])
     except Opus.DoesNotExist:
         form = OpusForm(data={'author': author, 'abbreviation': split[1]})
         return render(request, 'manage.html', {'form': form})
@@ -101,11 +101,11 @@ def manage_page(request):
     except TypeError:
         book_number = int(split[2])
     try:
-        book = versescanner.util.dbhandler.find_book(opus, book_number)
+        book = find_book(opus, book_number)
         try:
-            poem = versescanner.util.dbhandler.find_poem(book, split[3], True)
+            poem = find_poem(book, split[3], True)
         except IndexError:
-            poem = versescanner.util.dbhandler.find_poem(book, create=True)
+            poem = find_poem(book, create=True)
     except Book.DoesNotExist:
         book = Book(opus=opus, number=book_number)
         book.save()
@@ -118,5 +118,5 @@ def manage_page(request):
             poem.verseForm = VerseForm.HEXAMETRIC
         poem.save()
     lines = request.POST['fulltext'].replace('\r\n', '\n').split('\n')
-    versescanner.util.dbhandler.create_verses(poem, lines)
+    create_verses(poem, lines)
     return render(request, 'manage.html')

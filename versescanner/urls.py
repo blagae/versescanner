@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from versescanner.views import pages
-from versescanner.views.json import batch, index, manage
+from .views import pages
+from .views.json import batch, index, manage
 
 admin.autodiscover()
 

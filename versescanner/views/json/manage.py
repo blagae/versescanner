@@ -2,20 +2,20 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseForbidden
 
-import versescanner.util.filemanager
+from versescanner.util.filemanager import sync_files, sync_db
 from versescanner.models import Author, Genre, Opus, Period
 
 
 def sync_files(request):
     if request.user.is_superuser:
-        versescanner.util.filemanager.sync_files()
+        sync_files()
         return HttpResponse(status=204)
     return HttpResponseForbidden()
 
 
 def sync_db(request):
     if request.user.is_superuser:
-        versescanner.util.filemanager.sync_db()
+        sync_db()
         return HttpResponse(status=204)
     return HttpResponseForbidden()
 

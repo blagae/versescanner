@@ -2,8 +2,8 @@ from elisio.bridge import Bridge
 from elisio.sound import SoundFactory
 from elisio.syllable import Weight
 
-from versescanner.models.deviant import DeviantWord
-from versescanner.models.scan import WordOccurrence
+from ..models.deviant import DeviantWord
+from ..models.scan import WordOccurrence
 
 
 class DatabaseBridge(Bridge):

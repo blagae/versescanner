@@ -10,7 +10,7 @@ from elisio.parser.versefactory import VerseType
 from enumfields import EnumField
 from model_utils.managers import InheritanceManager
 
-from versescanner.util.utils import get_commit
+from ..util.utils import get_commit
 
 from .metadata import Author, Book, Opus, Poem, Verse
 

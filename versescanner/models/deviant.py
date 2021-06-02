@@ -7,7 +7,7 @@ from elisio.exceptions import WordException
 from elisio.syllable import Syllable, Weight
 from enumfields import EnumField
 
-from versescanner.util.utils import set_django
+from ..util.utils import set_django
 
 set_django()
 

@@ -8,8 +8,8 @@ from os.path import isfile, join
 from elisio.parser.versefactory import VerseForm
 from elisio.utils.numerals import int_to_roman
 
-from versescanner.models.metadata import Poem
-from versescanner.util.dbhandler import (create_verses, find_author, find_book,
+from ..models.metadata import Poem
+from ..util.dbhandler import (create_verses, find_author, find_book,
                                          find_opus, find_poem)
 
 form_extensions = {

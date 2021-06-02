@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 try:
-    from versescanner.local import (ADMINS, ALLOWED_HOSTS, DATABASES, DEBUG,
+    from .local import (ADMINS, ALLOWED_HOSTS, DATABASES, DEBUG,
                                     SECRET_KEY, SESSION_FILE_PATH)
 except ImportError:
     # next line explicitly for PyLint imo

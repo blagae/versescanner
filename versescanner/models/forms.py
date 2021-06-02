@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from versescanner.models.metadata import Author, Opus
+from ..models.metadata import Author, Opus
 
 
 class AuthorForm(ModelForm):

@@ -3,9 +3,9 @@ from elisio.exceptions import ScansionException, VerseException
 from elisio.parser.verse import Foot
 from elisio.parser.versefactory import VerseFactory, VerseType
 
-from versescanner.bridge.DatabaseBridge import DatabaseBridge
-from versescanner.models.metadata import Verse
-from versescanner.models.scan import (Batch, DatabaseBatchItem, ObjectType,
+from ..bridge.DatabaseBridge import DatabaseBridge
+from ..models.metadata import Verse
+from ..models.scan import (Batch, DatabaseBatchItem, ObjectType,
                                       BatchRun, BatchRunResult)
 
 
