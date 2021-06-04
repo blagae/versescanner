@@ -67,6 +67,9 @@
   <object pk="26" model="versescanner.DeviantWord">
     <field type="CharField" name="stem">^sibi$</field>
   </object>
+  <object pk="27" model="versescanner.DeviantWord">
+    <field type="CharField" name="stem">^fi[aeiou]</field>
+  </object>
   <!-- Deviant syllables -->
   <object pk="3" model="versescanner.DeviantSyllable">
     <field type="CharField" name="contents">cui</field>
@@ -289,6 +292,12 @@
     <field type="CharField" name="contents">bi</field>
     <field type="IntegerField" name="sequence">2</field>
     <field type="ForeignKey" name="word">26</field>
+    <field type="enum.EnumField" name="weight">3</field>
+  </object>
+  <object pk="44" model="versescanner.DeviantSyllable">
+    <field type="CharField" name="contents">fi</field>
+    <field type="IntegerField" name="sequence">1</field>
+    <field type="ForeignKey" name="word">27</field>
     <field type="enum.EnumField" name="weight">3</field>
   </object>
 </django-objects>
